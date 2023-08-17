@@ -31,12 +31,12 @@ interface State {
     addChatMessage: (sessionId:string, chatMessage:string)=>void
 }
 
-export const useStore = create<State>(
+export const useStore = create<State>()(
     persist(
         (set, get)=>({
             sessions: [],
             currentSession: null,
-            createSession: () => {
+            createSession(){
                 // 新增会话逻辑
                 const newSession:Session = {
                     id: genUniqId(),
@@ -51,19 +51,19 @@ export const useStore = create<State>(
                     currentSession: newSession
                 }));
             },
-            deleteSession(id: string) => {
+            deleteSession(id: string){
                 // 删除会话逻辑
                 set((state) => ({
                     sessions: state.sessions.filter(session => session.id !== id),
                 }));
             },
-            setCurrentSession(id: string) => {
+            setCurrentSession(id: string){
                 // 设置当前会话逻辑
                 const session = get().sessions.find(session => session.id === id);
                 set({ currentSession: session });
             },
 
-            addChatMessage(sessionId:string, chatMessage:string)=>{
+            addChatMessage(sessionId:string, chatMessage:string){
                 // 新增chat messgae
                 const state = get()
                 const updatedSessions = state.sessions.map(session => {
@@ -76,10 +76,10 @@ export const useStore = create<State>(
                     return session;
                 });
                 let updateCurrentSession = state.currentSession
-                if(currentSession && currentSession.id === sessionId){
+                if(updateCurrentSession && updateCurrentSession.id === sessionId){
                     updateCurrentSession = {
                         ...updateCurrentSession,
-                        chat:[...updateCurrentSession.chats, chatMessage]
+                        chats:[...updateCurrentSession.chats, chatMessage]
                     }
                 }
                 set({

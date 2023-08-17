@@ -8,9 +8,9 @@ const ChatWindow = () => {
   const {currentSession} = useStore()
   const initMessages = currentSession ? currentSession.chats : []
   const title = currentSession ? currentSession.title : '智能助理'
-  const { messages, appendMsg, setTyping } = useMessages(initMessages);
+  const { messages, appendMsg, setTyping } = useMessages([]);
 
-  function handleSend(type, val) {
+  function handleSend(type:any, val:any) {
     if (type === 'text' && val.trim()) {
       appendMsg({
         type: 'text',
@@ -31,7 +31,7 @@ const ChatWindow = () => {
     }
   }
 
-  function renderMessageContent(msg) {
+  function renderMessageContent(msg:any) {
     const { content } = msg;
     return <Bubble content={content.text} />;
   }
