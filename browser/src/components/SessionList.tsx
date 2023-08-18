@@ -21,9 +21,9 @@ export default function SessionList() {
           <button className="create-session-button" onClick={createSession}>
             <div className="create-session-content">
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" style={{marginRight: 5}}>
-                <g fill="none" fill-rule="evenodd" stroke="#FFF" stroke-linejoin="round" stroke-width="1.6">
+                <g fill="none" fill-rule="evenodd" stroke="#FFF" strokeLinejoin="round" stroke-width="1.6">
                   <path d="M9 16.875a7.875 7.875 0 1 0 0-15.75 7.875 7.875 0 0 0 0 15.75Z"></path>
-                  <path stroke-linecap="round" d="M9 5.85v6.3M5.85 9h6.3"></path>
+                  <path strokeLinecap="round" d="M9 5.85v6.3M5.85 9h6.3"></path>
                 </g>
               </svg>
               Create New Session
@@ -39,12 +39,8 @@ export default function SessionList() {
                 onClick={() => handleSelect(session.id)}
               >
                 <div className={currentSession && currentSession.id === session.id ? 'session-item session-item-select' : 'session-item'}>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18">
-                    <g fill="none" fill-rule="evenodd" stroke="#202430" stroke-linecap="round" stroke-width="1.6">
-                      <path stroke-linejoin="round" d="M12.544 14.593H9.337a1.125 1.125 0 0 1-1.124-1.125v-1.96h3.262a2.25 2.25 0 0 0 2.25-2.25V8.42h2.025c.621 0 1.125.504 1.125 1.125v3.922c0 .621-.504 1.125-1.125 1.125h-.844 0l-1.181 1.157-1.181-1.157Z"></path>
-                      <path stroke-linejoin="round" d="M2.25 2.25H12.6c.621 0 1.125.504 1.125 1.125v7.007c0 .621-.504 1.125-1.125 1.125H6.244h0L4.669 13.05l-1.575-1.543H2.25a1.125 1.125 0 0 1-1.125-1.125V3.375c0-.621.504-1.125 1.125-1.125Z"></path>
-                      <path d="M4.275 8.421h2.363M4.275 5.336H9"></path>
-                    </g>
+                  <svg className="icon" style={{width: '1em', height: '1em', verticalAlign: 'middle', fill: 'currentColor', overflow: 'hidden'}} viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3150">
+                    <path d="M512 64c259.2 0 469.333333 200.576 469.333333 448s-210.133333 448-469.333333 448a484.48 484.48 0 0 1-232.725333-58.88l-116.394667 50.645333a42.666667 42.666667 0 0 1-58.517333-49.002666l29.76-125.013334C76.629333 703.402667 42.666667 611.477333 42.666667 512 42.666667 264.576 252.8 64 512 64z m0 64C287.488 128 106.666667 300.586667 106.666667 512c0 79.573333 25.557333 155.434667 72.554666 219.285333l5.525334 7.317334 18.709333 24.192-26.965333 113.237333 105.984-46.08 27.477333 15.018667C370.858667 878.229333 439.978667 896 512 896c224.512 0 405.333333-172.586667 405.333333-384S736.512 128 512 128z m-157.696 341.333333a42.666667 42.666667 0 1 1 0 85.333334 42.666667 42.666667 0 0 1 0-85.333334z m159.018667 0a42.666667 42.666667 0 1 1 0 85.333334 42.666667 42.666667 0 0 1 0-85.333334z m158.997333 0a42.666667 42.666667 0 1 1 0 85.333334 42.666667 42.666667 0 0 1 0-85.333334z" fill="#333333" p-id="3151"></path>
                   </svg>
                   <div className='session-title-wrap'>{session.title}</div>
                   <div className='session-item-delete-wrap'>
