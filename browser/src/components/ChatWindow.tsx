@@ -37,12 +37,16 @@ const ChatWindow = () => {
   }
 
   return (
-    <Chat
-      navbar={{title}}
-      messages={messages}
-      renderMessageContent={renderMessageContent}
-      onSend={handleSend}
-    />
+    <div className='chat-window'>
+      <Chat
+        locale='en'
+        navbar={{title}}
+        messages={messages}
+        renderMessageContent={renderMessageContent}
+        onSend={handleSend}
+      />
+    </div>
+    
   );
 };
 

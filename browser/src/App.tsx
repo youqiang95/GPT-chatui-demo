@@ -6,11 +6,9 @@ import ChatWindow from './components/ChatWindow';
 
 function App() {
   return (
-    <div className="App">
-      <div className="app">
-        <SessionList />
-        <ChatWindow />
-    </div>
+    <div className="app">
+      <SessionList />
+      <ChatWindow />
     </div>
   );
 }

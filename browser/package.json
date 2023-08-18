@@ -17,7 +17,9 @@
     "web-vitals": "^2.1.4",
     "zustand": "4.4.1",
     "idb-keyval": "^6.2.1",
-    "@chatui/core": "2.4.2"
+    "@chatui/core": "2.4.2",
+    "antd": "5.8.3",
+    "@ant-design/icons": "5.2.5"
   },
   "scripts": {
     "start": "react-scripts start",

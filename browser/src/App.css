@@ -1,32 +1,94 @@
-.App {
-  text-align: center;
+*, :after, :before {
+  box-sizing: border-box;
+  border: 0 solid #e5e7eb;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.app {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.session-list {
+  flex: 15%;
+  height: 100%;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.session-list-main {
+  padding-top: 1.25rem;
+  padding-bottom: 0.25rem;
+  padding-left: 0.625rem;
+  padding-right: 0.625rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  height: 100%;
 }
 
-.App-link {
-  color: #61dafb;
+/* .session-list-main-header{
+} */
+
+.create-session-button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 12px; 
+  border-radius: 25px;
+  padding: 10px 20px;
+  background-color: #ff7531;
+  border-color: #ff7531;
+  border-width: 0;
+  color: #f5f7fb;
+  box-shadow: none;
 }
+
+.create-session-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.session-list-main-content {
+  flex: 1 1 0%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.session-item {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+}
+
+.session-item:hover {
+  background-color: rgb(245 247 250);
+}
+.session-item-select {
+  background-color: rgb(245 247 250);
+}
+
+.session-title-wrap {
+  flex: 1 1 0%;
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.session-delete-button {
+  cursor: pointer;
+  border: 0;
+  background-color: transparent;
+}
+
+.chat-window {
+  flex: 85%;
+  height: 100%;
+}
+
 
 @keyframes App-logo-spin {
   from {
@@ -35,4 +97,11 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+
+menu, ol, ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
