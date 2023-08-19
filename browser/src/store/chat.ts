@@ -61,7 +61,8 @@ interface State {
     deleteSession: (id: string) => void;
     setCurrentSession: (id: string) => void;
     addChatMessage: (sessionId:string, chatMessage:IMessage)=>void;
-    sendMessage: (text:string)=>void,
+    sendMessage: (text:string)=>Promise<void>,
+    sendMessageStream: (text:string)=>Promise<void>,
     updateChatMessage: (sessionId: string, messageId: MessageId, updatedMessage: IMessage)=>void
 }
 
@@ -141,7 +142,7 @@ export const useStore = create<State>()(
                 set({sessions: updatedSessions})
             },
 
-            sendMessage(text:string){
+            async sendMessage(text:string){
                 if(!get().currentSession){
                     get().createSession()
                 }
@@ -163,21 +164,101 @@ export const useStore = create<State>()(
                 };
                 get().addChatMessage(sessionId, loadingMessage)
 
-                setTimeout(() => {
-                    const realMessage: IMessage = {
-                        ...loadingMessage,
-                        type: 'text',
-                        content: { text: 'hello i am real message!'},
-                    };
-                    get().updateChatMessage(sessionId, loadingMessage._id, realMessage)
-                    const currentSession = get().currentSession
-                    if (currentSession && sessionId === currentSession.id) {
-                        const newSession = get().sessions.find(s => s.id === sessionId) as Session
-                        set({
-                          currentSession: {...newSession}
-                        });
+                let resp = 'An error has occurred'
+                try {
+                    const response = await fetch('/api/chat/get_ai_response', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({user_input: text})
+                    })
+                    const respText = await response.text()
+                    const respObj = JSON.parse(respText)
+                    if(respObj.ai_response){
+                        resp = respObj.ai_response
                     }
-                  }, 5000);
+                } catch (error) {
+                    console.error(error)
+                }
+                const realMessage: IMessage = {
+                    ...loadingMessage,
+                    type: 'text',
+                    content: { text: resp},
+                };
+                get().updateChatMessage(sessionId, loadingMessage._id, realMessage)
+                const currentSession = get().currentSession
+                if (currentSession && sessionId === currentSession.id) {
+                    const newSession = get().sessions.find(s => s.id === sessionId) as Session
+                    set({
+                      currentSession: {...newSession}
+                    });
+                }
+            },
+
+            async sendMessageStream(text:string){
+                if(!get().currentSession){
+                    get().createSession()
+                }
+                const session = get().currentSession
+                const sessionId = session!.id
+                const userMessage: IMessage = {
+                    _id: genUniqId(),
+                    type: 'text', 
+                    content: { text},
+                    position: 'right'
+                }
+                get().addChatMessage(sessionId, userMessage)
+
+                const loadingMessage: IMessage = {
+                    _id: genUniqId(),
+                    type: 'loading', 
+                    content: { text: 'Loading...'},
+                    position: 'left'
+                };
+                get().addChatMessage(sessionId, loadingMessage)
+
+                let resp = ''
+                try {
+                    const eventSource = new EventSource(`/api/chat/get_ai_response_stream?user_input=${text}`);
+                    eventSource.onopen = () => {
+                        console.log('Connection opened');
+                    }
+                    eventSource.onerror = (e:any) => {
+                        console.log('Error occurred', e);
+                        eventSource.close();
+                        return
+                    }
+                    (eventSource as any).onclose  = () => {
+                        console.log('Connection closed');
+                    }
+                    eventSource.onmessage = (event:any) => {
+                        const delta = event.data 
+                        console.log('onmessage', delta)
+                        if(delta === '[DONE]'){
+                            eventSource.close();
+                            return
+                        }
+                        resp += delta
+                        const realMessage: IMessage = {
+                            ...loadingMessage,
+                            type: 'text',
+                            content: { text: resp},
+                        };
+                        get().updateChatMessage(sessionId, loadingMessage._id, realMessage)
+                        const currentSession = get().currentSession
+                        if (currentSession && sessionId === currentSession.id) {
+                            const newSession = get().sessions.find(s => s.id === sessionId) as Session
+                            set({
+                              currentSession: {...newSession}
+                            });
+                        }
+                        console.log('xxxxxxxxxx', get().currentSession?.chats)
+                    };
+                } catch (error) {
+                    console.error(error)
+                }
             }
         }),
 
