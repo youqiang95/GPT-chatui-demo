@@ -1,6 +1,5 @@
 import os
 import openai
-import json
 
 openai.api_key = os.getenv('OPENAI_KEY')
 if os.getenv('OPENAI_URL'):
