@@ -17,20 +17,15 @@ def get_ai_response():
 @api.route('/chat/get_ai_response_stream', methods=['GET'])  
 def get_ai_response_stream():
     try:
-        # user_input = request.json['user_input']
         user_input = request.args.get('user_input') 
-        # delta_message_generator = get_response_stream_generator(user_input)
+        delta_message_generator = get_response_stream_generator(user_input)
         @stream_with_context
         def sse_events():
-            # for delta in delta_message_generator:
-            #     print('dd', delta)
-            #     yield "data: {}\n\n".format(delta)
-            #     time.sleep(0.5)
-            for i in range(5):
-                yield "data: {}\n\n".format(i)
-                time.sleep(1)
-            yield '[DONE]'
-        return Response(sse_events(), mimetype="text/event-stream")
+            for delta in delta_message_generator:
+                yield "data: {}\n\n".format(delta)
+        response = Response(sse_events(), mimetype="text/event-stream")
+        response.headers['Content-Encoding'] = 'identity'
+        return response
     except Exception as e:
         traceback.print_exc()
         return {'err': 'server_error'}

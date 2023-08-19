@@ -103,18 +103,28 @@ export const useStore = create<State>()(
                 const state = get()
                 const updatedSessions = state.sessions.map(session => {
                     if(session.id === sessionId) {
-                      return {
-                        ...session,
-                        chats: [...session.chats, chatMessage]
-                      };
+                        let title = session.title
+                        if(session.chats.length === 0){
+                            title = chatMessage.content.text.substring(0, 50);
+                        }
+                        return {
+                            ...session,
+                            chats: [...session.chats, chatMessage],
+                            title
+                        };
                     }
                     return session;
                 });
                 let updateCurrentSession = state.currentSession
                 if(updateCurrentSession && updateCurrentSession.id === sessionId){
+                    let title = updateCurrentSession.title
+                    if(updateCurrentSession.chats.length === 0){
+                        title = chatMessage.content.text.substring(0, 50);
+                    }
                     updateCurrentSession = {
                         ...updateCurrentSession,
-                        chats:[...updateCurrentSession.chats, chatMessage]
+                        chats:[...updateCurrentSession.chats, chatMessage],
+                        title 
                     }
                 }
                 set({
@@ -235,7 +245,6 @@ export const useStore = create<State>()(
                     }
                     eventSource.onmessage = (event:any) => {
                         const delta = event.data 
-                        console.log('onmessage', delta)
                         if(delta === '[DONE]'){
                             eventSource.close();
                             return
@@ -254,7 +263,6 @@ export const useStore = create<State>()(
                               currentSession: {...newSession}
                             });
                         }
-                        console.log('xxxxxxxxxx', get().currentSession?.chats)
                     };
                 } catch (error) {
                     console.error(error)

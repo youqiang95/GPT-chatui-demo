@@ -32,7 +32,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 auto 12px; 
+  margin: 10px auto 12px; 
   border-radius: 25px;
   padding: 10px 20px;
   background-color: #ff7531;
@@ -40,6 +40,7 @@
   border-width: 0;
   color: #f5f7fb;
   box-shadow: none;
+  cursor: pointer;
 }
 
 .create-session-content {
