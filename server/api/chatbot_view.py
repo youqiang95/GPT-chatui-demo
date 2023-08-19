@@ -36,7 +36,7 @@ def get_ai_response_stream():
 def char_generator(text):
     for c in text:
         yield c
-        time.sleep(0.1)
+        time.sleep(0.05)
     yield '[DONE]'
 
 def mock_ai_response_stream():

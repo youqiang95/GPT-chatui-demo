@@ -39,6 +39,7 @@ const ChatWindow = () => {
         renderMessageContent={renderMessageContent}
         onSend={handleSend}
         placeholder='Type message here......'
+        inputOptions={{rows:3}}
       />
     </div>
   );

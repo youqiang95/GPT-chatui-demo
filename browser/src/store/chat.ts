@@ -217,7 +217,10 @@ export const useStore = create<State>()(
                     _id: genUniqId(),
                     type: 'text', 
                     content: { text},
-                    position: 'right'
+                    position: 'right',
+                    user:{
+                        avatar: 'avatar.svg'
+                    }
                 }
                 get().addChatMessage(sessionId, userMessage)
 
@@ -225,7 +228,10 @@ export const useStore = create<State>()(
                     _id: genUniqId(),
                     type: 'loading', 
                     content: { text: 'Loading...'},
-                    position: 'left'
+                    position: 'left',
+                    user: {
+                        avatar: 'bot-avatar.svg'
+                    }
                 };
                 get().addChatMessage(sessionId, loadingMessage)
 
