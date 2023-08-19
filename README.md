@@ -1,5 +1,5 @@
 # GPT-chatui-demo
-English / [简体中文](./README_CN.md)
+English / [简体中文](./README-CN.md)
 
 ## Introduction
 GPT-chatui-demo is a chatGPT like robot chat application based on React and Flask. It uses Alibaba's open-source chatui (@ chatui/core) component library as the chat component, which is very lightweight,
