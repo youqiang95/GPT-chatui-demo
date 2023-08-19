@@ -28,6 +28,7 @@ Then open it http://localhost:9000 Experience it now
 
 ## Screenshot
 <img src="media/chatui-en.png" width="800" />
+<img src="media/chatui-zn.png" width="800" />
 
 ## Technology Stack
 ### Front end
