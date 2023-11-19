@@ -1,3 +1,5 @@
+import sys
+sys.path.insert(0, 'libs') 
 from dotenv import load_dotenv
 load_dotenv()
 from flask import Flask
